@@ -66,6 +66,11 @@ class AceFeatureEditor extends React.Component {
     getContent=()=>{
         return this.state.editorContent;
     }
+    setContent=(content)=>{
+        this.setState({
+            editorContent:content
+        })
+    }
     
     addLine=(line)=>{
         this.setState({

@@ -61,7 +61,7 @@ export default function Profile(props) {
           Config Profile
         </ListSubheader>
       }
-      style={{ height: "100%"}}
+      style={{ height: "100%",margin:0,maxWidth:"100%"}}
       className={classes.root}
     >
       

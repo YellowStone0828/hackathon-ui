@@ -4,7 +4,8 @@ import {
   Grid,
   AppBar,
   Button,
-  makeStyles
+  makeStyles,
+  IconButton
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import FeatureList from './FeatureList';
@@ -16,12 +17,63 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import AntTabPanel from 'src/components/AntTabPanel';
-import {sendGetRequest,sendPostRequest,convertRes2Blob} from 'src/utilities/RequestHelper';
+import { sendGetRequest, sendPostRequest, convertRes2Blob } from 'src/utilities/RequestHelper';
 
 import { AntTabs, AntTab } from 'src/components/AntTab';
 import { format } from 'url';
 import data from 'src/views/customer/CustomerListView/data';
 import parseJson from 'parse-json';
+
+import Dialog from '@material-ui/core/Dialog';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import MuiDialogActions from '@material-ui/core/DialogActions';
+import CloseIcon from '@material-ui/icons/Close';
+import FeatureTemplateItems from './FeatureTemplateItems';
+import { withStyles } from '@material-ui/styles'
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Checkbox from '@material-ui/core/Checkbox';
+import Avatar from '@material-ui/core/Avatar';
+import Notifications from './Notifications';
+import SaveNotification from './SaveNotification';
+
+const styles = (theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+});
+
+const DialogTitle = withStyles(styles)((props) => {
+  const { children, classes, onClose, ...other } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h6">{children}</Typography>
+      {onClose ? (
+        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  );
+});
+
+const DialogContent = withStyles((theme) => ({
+  root: {
+    padding: theme.spacing(2),
+  },
+}))(MuiDialogContent);
 
 
 function a11yProps(index) {
@@ -54,8 +106,8 @@ const useStyles = makeStyles((theme) => ({
   tabdemo2: {
     backgroundColor: '#2e1534',
   },
-  btn:{
-    zIndex:100
+  btn: {
+    zIndex: 100
   }
 }));
 
@@ -64,44 +116,81 @@ const Feature = () => {
 
   const classes = useStyles();
   const [tabValue, setTabValue] = useState(0);
-  const [editorValue, setEditorValue]=useState("");
+  const [editorValue, setEditorValue] = useState("");
   const [anyValue, setAnyValue] = useState("");
   const [lstEditor, setLstEditor] = useState([]);
-  const [runResult,setRunResult] = useState("Sample Result");
+  const [runResult, setRunResult] = useState("Sample Result");
+  const [open, setOpen] = useState(false);
+  const [checked, setChecked]=useState([]);
 
-  const [saveBtnColor,setSaveBtnColor] = useState("black");
+  const [saveNotificationOpen,setSaveNotificationOpen] = useState(false);
+  const [runNotificationOpen,setRunNotificationOpen] = useState(false);
 
-  const handleChange = (event, value) => {    
+  const [tabName,setTabName] = useState("undefined.feature")
+  
+  const handleToggle = (value)=>{
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+
+    setChecked(newChecked);
+  }
+
+  const handleClose = (event, value) => {
+    setOpen(false);
+    setRunNotificationOpen(false);
+    setSaveNotificationOpen(false);
+  }
+
+  const [saveBtnColor, setSaveBtnColor] = useState("black");
+
+  const handleChange = (event, value) => {
     setTabValue(value);
   }
 
-  const handleTemplateItemSelected = (product)=>{ 
+  const handleTemplateItemSelected = (product) => {
     lstEditor[tabValue].addLine(product.description);
   }
-
-  const handleSaveClick=()=>{    
-    const saveSuccessfully=(data)=>{
-      setSaveBtnColor("green");
-    }    
-    const saveFailed=(data)=>{
-      setSaveBtnColor("red");
-    }
-    sendPostRequest("http://192.168.8.116:8202/feature/add",{content:lstEditor[tabValue].getContent()},saveSuccessfully,saveFailed,saveFailed);    
+  const handleSaveClick = ()=>{
+    setOpen(true);
+    setSaveNotificationOpen(true);
   }
 
-  const presentReport = (data)=>{
-    if(data && data.length>0){      
+  const handleDialogSaveClick = () => {
+    const saveSuccessfully = (data) => {
+      setSaveBtnColor("green");
+    }
+    const saveFailed = (data) => {
+      setSaveBtnColor("red");
+    }
+    sendPostRequest("http://192.168.8.116:8202/feature/add", { content: lstEditor[tabValue].getContent(),name:tabName, group:"public" }, saveSuccessfully, saveFailed, saveFailed);
+    setOpen(false);
+    setSaveNotificationOpen(false);
+  }
+
+  const presentReport = (data) => {
+    if (data && data.length > 0) {
       // console.log(data);
       convertRes2Blob(data);
 
-    }else{
-
+    } else {
     }
 
   }
 
-  const handleRunClick=()=>{        
-    sendPostRequest("http://192.168.8.116:8202/cucumber/start",{content:lstEditor[tabValue].getContent()},presentReport,presentReport,presentReport);
+  const handleRunClick = () => {
+    setOpen(true);    
+    setRunNotificationOpen(true);
+  }
+  const handleDialogRunClick=()=>{
+    sendPostRequest("http://192.168.8.116:8202/cucumber/start", { content: lstEditor[tabValue].getContent(),name:tabName,group:"public"}, presentReport, presentReport, presentReport);
+    setOpen(false);
+    setRunNotificationOpen(false);
   }
 
   return (
@@ -121,7 +210,7 @@ const Feature = () => {
             md={3}
             xs={12}
           >
-            <FeatureList />
+            <FeatureList  onNameClick={(order)=>{lstEditor[tabValue].setContent(order.content); setTabName(order.name+".feature");}}/>
             {/* <Grid container spacing={1}>
               <Grid item lg={12} xs={12}><FeatureList /></Grid>
             </Grid>
@@ -130,35 +219,37 @@ const Feature = () => {
             </Grid> */}
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
-            <div style={{display:'block',position:'relative'}}><div style={{position:"absolute",top:"5px",right:"0px"}}>
-              <Button style={{color:saveBtnColor}} onClick={handleSaveClick} className={classes.btn}>Save</Button>
+            <div style={{ display: 'block', position: 'relative' }}><div style={{ position: "absolute", top: "5px", right: "0px" }}>
+              <Button style={{ color: saveBtnColor }} onClick={handleSaveClick} className={classes.btn}>Save</Button>
               <Button onClick={handleRunClick} className={classes.btn}>Run</Button></div></div>
             <div className={classes.tabroot} description={anyValue}>
               <div className={classes.tabdemo1}>
                 <AntTabs value={tabValue} onChange={handleChange} aria-label="ant example">
-                  <AntTab label="feature 1.feature" />
-                  <AntTab label="feature 2.feature" />
-                  <AntTab label="feature 3.feature" />
-                </AntTabs>  
+                  <AntTab label={tabName} />              
+                </AntTabs>
                 <AntTabPanel value={tabValue} index={0} description={editorValue}>
-                  <AceFeatureEditor onLoad={(editor)=>{ lstEditor.push(editor); setLstEditor(lstEditor);}} mode="gherkin" value={editorValue}/>
+                  <AceFeatureEditor onLoad={(editor) => { lstEditor.push(editor); setLstEditor(lstEditor); }} mode="gherkin" value={editorValue} />
                 </AntTabPanel>
-                <AntTabPanel value={tabValue} index={1} descript={editorValue}>
-                  <AceFeatureEditor  onLoad={(editor)=>{ lstEditor.push(editor); setLstEditor(lstEditor);}} mode="gherkin" value={editorValue}/>
-                </AntTabPanel>
-                <AntTabPanel value={tabValue} index={2} descript={editorValue}>
-                  <AceFeatureEditor  onLoad={(editor)=>{ lstEditor.push(editor); setLstEditor(lstEditor);}} mode="gherkin" value={editorValue}/>
-                </AntTabPanel>
+               
               </div>
-            </div>            
+            </div>
+            <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+              <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                Modal title
+             </DialogTitle>
+              <DialogContent dividers>
+                <Notifications onDialogRunClick={handleDialogRunClick} style={{display:runNotificationOpen?"block":"none"}}/>
+                <SaveNotification style={{display:saveNotificationOpen?"block":"none"}} onDialogSaveClick={handleDialogSaveClick}/>
+              </DialogContent>
+            </Dialog>
           </Grid>
           <Grid
             item
             lg={3}
             md={3}
-            xs={12}
+            xs={12}s
           >
-            <FeatureTemplate onTemplateItemSelected={handleTemplateItemSelected}/>
+            <FeatureTemplate onTemplateItemSelected={handleTemplateItemSelected} />
             {/* <FeatureResult data={runResult}/> */}
           </Grid>
         </Grid>

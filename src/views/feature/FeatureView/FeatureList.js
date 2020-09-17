@@ -107,7 +107,7 @@ const FeatureList = ({ className, ...rest }) => {
     sendGetRequest("http://192.168.8.116:8202/feature/delete?id="+order.id,null,()=>{});
   }
   const handleNameClick=(order)=>{
-
+    rest.onNameClick(order);
   }
   return (
     <Card
