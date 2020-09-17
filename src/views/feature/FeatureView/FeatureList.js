@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Bar } from 'react-chartjs-2';
@@ -18,6 +18,7 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import PerfectScrollbar from "react-perfect-scrollbar";
 import moment from "../../reports/DashboardView/LatestOrders";
 import {v4 as uuid} from "uuid";
+import {sendGetRequest} from "../../../utilities/RequestHelper";
 
 const data = [
   {
@@ -90,6 +91,9 @@ const useStyles = makeStyles(() => ({
 const FeatureList = ({ className, ...rest }) => {
   const classes = useStyles();
   const [orders,setOrders] = useState(data);
+  useEffect(()=>{
+      sendGetRequest("http://192.168.8.116:8202/feature/findFeatureGroup?group=public",null,(data)=>{setOrders(data)});
+  },[])
   const handleDeleteClick=(order)=>{
     let newOrders = [];
     for(let i=0;i<orders.length;i++){
@@ -100,6 +104,10 @@ const FeatureList = ({ className, ...rest }) => {
     }
     
     setOrders(newOrders);
+    sendGetRequest("http://192.168.8.116:8202/feature/delete?id="+order.id,null,()=>{});
+  }
+  const handleNameClick=(order)=>{
+
   }
   return (
     <Card
@@ -138,8 +146,10 @@ const FeatureList = ({ className, ...rest }) => {
                   hover
                   key={order.id}
                 >
-                  <TableCell>
-                    {order.customer.name}
+                  <TableCell
+                    onClick={()=>{handleNameClick(order)}}
+                  >
+                    {order.name}
                   </TableCell>
                   <TableCell>
                     <Chip
