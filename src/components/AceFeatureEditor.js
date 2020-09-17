@@ -36,7 +36,7 @@ class AceFeatureEditor extends React.Component {
             editorContent: props.value,
         }
         this.message = "";
-        this.front = 10;
+        this.front = 12;
 
         if(this.props.onLoad)this.props.onLoad(this);
     }

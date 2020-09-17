@@ -15,8 +15,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import AntTabPanel from 'src/components/AntTabPanel';
+import {sendGetRequest,sendPostRequest} from 'src/utilities/RequestHelper';
 
 import { AntTabs, AntTab } from 'src/components/AntTab';
+import { format } from 'url';
 
 function a11yProps(index) {
   return {
@@ -52,15 +54,18 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Feature = () => {
+
   const classes = useStyles();
   const [tabValue, setTabValue] = useState(0);
   const [editorValue, setEditorValue]=useState("");
+  const [anyValue, setAnyValue] = useState("");
   const handleChange = (event, value) => {    
     setTabValue(value);
   }
 
   const handleTemplateItemSelected = (product)=>{      
     setEditorValue(product.description);  
+    setAnyValue(product.description);
   }
 
   return (
@@ -88,14 +93,14 @@ const Feature = () => {
             </Grid>
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
-            <div className={classes.tabroot}>
+            <div className={classes.tabroot} description={anyValue}>
               <div className={classes.tabdemo1}>
                 <AntTabs value={tabValue} onChange={handleChange} aria-label="ant example">
                   <AntTab label="feature 1.feature" />
                   <AntTab label="feature 2.feature" />
                   <AntTab label="feature 3.feature" />
                 </AntTabs>
-                <AntTabPanel value={tabValue} index={0} descript={editorValue}>
+                <AntTabPanel value={tabValue} index={0} description={editorValue}>
                   <AceFeatureEditor mode="gherkin" value={editorValue}/>
                 </AntTabPanel>
                 <AntTabPanel value={tabValue} index={1} descript={editorValue}>

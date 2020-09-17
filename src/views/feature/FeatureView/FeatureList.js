@@ -59,7 +59,8 @@ const data = [
     },
     createdAt: 1554757200000,
     status: 'pending'
-  },
+  }
+  ,
   {
     id: uuid(),
     ref: 'CDD1045',
@@ -88,8 +89,18 @@ const useStyles = makeStyles(() => ({
 
 const FeatureList = ({ className, ...rest }) => {
   const classes = useStyles();
-  const [orders] = useState(data);
-
+  const [orders,setOrders] = useState(data);
+  const handleDeleteClick=(order)=>{
+    let newOrders = [];
+    for(let i=0;i<orders.length;i++){
+      if(orders[i].id===order.id){
+        continue;
+      }
+      newOrders.push(orders[i]);
+    }
+    
+    setOrders(newOrders);
+  }
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -135,6 +146,7 @@ const FeatureList = ({ className, ...rest }) => {
                       color="danger"
                       label="X"
                       size="small"
+                      onClick={()=>{handleDeleteClick(order)}}
                     />
                   </TableCell>
                 </TableRow>
