@@ -2,6 +2,7 @@ import React from 'react'
 
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-gherkin'
+import 'ace-builds/src-noconflict/mode-yaml'
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
 
@@ -20,26 +21,17 @@ const defaultCompleters = [
     // {name:'Click', value:"Then (\\w+) click on (\\w+)"}
 ];
 
-const complete = editor => {
-    if(!editor.completers){
-        editor.completers=[];
-    }
-    editor.completers.push({
-        getCompletions: function (editors, session, pos, prefix, callback) {
-            callback(null, defaultCompleters);
-        }
-    });
-}
-
+const DEFAULT_MODE = "gherkin";
 
 class AceFeatureEditor extends React.Component {
-    // completers                                       to set hints
+    // completers                                       to set hints,ex:[{name:"",value:""}]
+    // mode                                             "gherkin" or "yaml"
     //void onLoad(AceFeatureEditor editor)              onLoadEvent
 
     constructor(props) {
         super(props);
         this.state = {
-            mode: 'gherkin',
+            mode: this.props.mode?this.props.mode:DEFAULT_MODE,
             readOnly: false,
             editorContent: "Feature: feature",
         }
