@@ -9,7 +9,8 @@ import {
   Hidden,
   IconButton,
   Toolbar,
-  makeStyles
+  makeStyles,
+  Button
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
@@ -44,7 +45,7 @@ const TopBar = ({
         </RouterLink>
         <Box flexGrow={1} />
         <Hidden mdDown>
-          <IconButton color="inherit">
+          {/* <IconButton color="inherit">
             <Badge
               badgeContent={notifications.length}
               color="primary"
@@ -52,10 +53,11 @@ const TopBar = ({
             >
               <NotificationsIcon />
             </Badge>
-          </IconButton>
-          <IconButton color="inherit">
+          </IconButton> */}
+          {/* <IconButton color="inherit">
             <InputIcon />
-          </IconButton>
+          </IconButton> */}
+          <Button style={{color:'white'}}>Sign in</Button>
         </Hidden>
         <Hidden lgUp>
           <IconButton
