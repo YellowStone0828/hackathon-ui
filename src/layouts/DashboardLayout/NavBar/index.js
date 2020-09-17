@@ -37,6 +37,12 @@ const items = [
   //   title: '  Dashboard'
   // },
   {
+
+    href: '/app/feature',
+    icon: BarChartIcon,
+    title: 'Feature'
+  },
+  {
     href: '/app/config',
     icon: SettingsIcon,
     title: 'Config'
@@ -46,12 +52,7 @@ const items = [
     icon: UsersIcon,
     title: 'Admin'
   },
-  {
-
-    href: '/app/feature',
-    icon: BarChartIcon,
-    title: 'Feature'
-  },
+  
   // {
   //   href: '/app/customers',
   //   icon: UsersIcon,
