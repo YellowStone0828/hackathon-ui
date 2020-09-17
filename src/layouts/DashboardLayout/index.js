@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
+import { minHeight } from '@material-ui/system';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     paddingTop: 64,
     [theme.breakpoints.up('lg')]: {
-      paddingLeft: 256
+      paddingLeft: 70
     }
   },
   contentContainer: {
@@ -29,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flex: '1 1 auto',
     height: '100%',
-    overflow: 'auto'
+    overflow: 'auto',
+    minHeight:'100%'
   }
 }));
 

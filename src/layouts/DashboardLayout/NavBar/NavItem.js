@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1)
   },
   title: {
-    marginRight: 'auto'
+    display:'none'
   },
   active: {
     color: theme.palette.primary.main,
