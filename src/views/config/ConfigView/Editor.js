@@ -1,18 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { render } from "react-dom";
 import AceEditor from "react-ace";
 import {
-Typography,
 Button,
-Box,
 Grid,
 CardHeader} 
 from '@material-ui/core';
  
 import "ace-builds/src-noconflict/mode-yaml";
 import "ace-builds/src-noconflict/theme-github";
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 export default function Editor(props) {
   // console.log ("start",props.text)
