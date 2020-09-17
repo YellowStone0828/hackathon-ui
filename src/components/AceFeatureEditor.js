@@ -61,7 +61,11 @@ class AceFeatureEditor extends React.Component {
         this.setState({
             editorContent: this.state.editorContent+"\r\n"+line
         });
-    }    
+    }   
+    
+    handleContentChange=(value,event)=>{
+        this.setState({editorContent:value});
+    }
 
     render() {
 
@@ -69,8 +73,7 @@ class AceFeatureEditor extends React.Component {
             mode={this.state.mode}
             readOnly={this.state.readOnly}
             theme="github"
-            name="app_code_editor"
-            onChange={this.onChange}
+            name="app_code_editor"            
             fontSize={this.fontSize}
             showPrintMargin
             showGutter
@@ -97,6 +100,7 @@ class AceFeatureEditor extends React.Component {
                 tabSize: 4
             }}
             onLoad={this.loadCompleters}
+            onChange={this.handleContentChange}
         />);
     }
 }
