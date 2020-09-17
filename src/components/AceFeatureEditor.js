@@ -33,9 +33,9 @@ class AceFeatureEditor extends React.Component {
         this.state = {
             mode: this.props.mode?this.props.mode:DEFAULT_MODE,
             readOnly: false,
-            editorContent: "Feature: feature",
+            editorContent: "",
         }
-        this.message = "Feature: feature";
+        this.message = "";
         this.front = 10;
 
         this.props.onLoad(this);
