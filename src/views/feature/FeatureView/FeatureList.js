@@ -84,7 +84,7 @@ const data = [
 ];
 
 const useStyles = makeStyles(() => ({
-  root: {}
+  root: {height:'100%'}
 }));
 
 const FeatureList = ({ className, ...rest }) => {

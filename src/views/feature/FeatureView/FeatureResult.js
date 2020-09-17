@@ -42,7 +42,7 @@ const FeatureResult = ({ className, ...rest }) => {
             color="textSecondary"
             variant="body1"
           >
-            {log.content}
+            {rest.data}
           </Typography>
       </CardContent>
       <Divider />

@@ -5,6 +5,7 @@ import 'ace-builds/src-noconflict/mode-gherkin'
 import 'ace-builds/src-noconflict/mode-yaml'
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
+import{sendGetRequest} from 'src/utilities/RequestHelper';
 
 // 增加需要自定义的代码提示
 const defaultCompleters = [
@@ -36,21 +37,30 @@ class AceFeatureEditor extends React.Component {
             editorContent: props.value,
         }
         this.message = "";
-        this.front = 12;
+        this.front = 15;
 
         if(this.props.onLoad)this.props.onLoad(this);
     }
 
     loadCompleters=(editor)=>{
-        const completers = this.props.completers && this.props.completers.length>0?this.props.completers:defaultCompleters;
-        if(!editor.completers){
-            editor.completers=[];
-        }
-        editor.completers.push({
-            getCompletions: function (editors, session, pos, prefix, callback) {
-                callback(null, completers);
+        sendGetRequest("http://192.168.8.116:8202/feature/findHint",null,(data)=>{
+            let completers = data.result;
+            if(this.props.completers && this.props.completers.length>0){
+                completers.push(this.props.completers);
             }
-        });
+            if(completers.length===0){
+                completers=defaultCompleters;
+            }
+            if(!editor.completers){
+                editor.completers=[];
+            }
+            editor.completers.push({
+                getCompletions: function (editors, session, pos, prefix, callback) {
+                    callback(null, completers);
+                }
+            });
+
+        },(data)=>{},(data)=>{});       
     }
 
     getContent=()=>{
@@ -59,7 +69,7 @@ class AceFeatureEditor extends React.Component {
     
     addLine=(line)=>{
         this.setState({
-            editorContent: this.state.editorContent+"\r\n"+line
+            editorContent: this.state.editorContent&&this.state.editorContent!==""?(this.state.editorContent+"\r\n"+line):line
         });
     }   
     
@@ -74,7 +84,7 @@ class AceFeatureEditor extends React.Component {
             readOnly={this.state.readOnly}
             theme="github"
             name="app_code_editor"            
-            fontSize={this.fontSize}
+            fontSize={this.front}
             showPrintMargin
             showGutter
             highlightActiveLine  //突出活动线
