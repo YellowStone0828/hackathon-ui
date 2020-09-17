@@ -29,6 +29,10 @@ import SendIcon from '@material-ui/icons/Send';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 
 // const useStyles = makeStyles(({
 //   root: {},
@@ -49,15 +53,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Profile = ({ className, ...rest }) => {
+export default function Profile(props) {
 
   const classes = useStyles();
   const [open_common, setOpenCommon] = React.useState(false);
   const [open_personal, setOpenPersonal] = React.useState(false);
   const [open_projects, setOpenProjects] = React.useState(false);
+  // const [config, setConfig] = React.useState();
+  
 
   const handleClickCommon = () => {
     setOpenCommon(!open_common);
+    // setConfig(this.props.config);
   };
   const handleClickProjects = () => {
     setOpenProjects(!open_projects);
@@ -65,6 +72,11 @@ const Profile = ({ className, ...rest }) => {
   const handleClickPersonal = () => {
     setOpenPersonal(!open_personal);
   };
+
+  const handleAddCommon = () => {
+    handleClickCommon();
+    alert("clicked");
+  }
 
   return (
     
@@ -78,16 +90,26 @@ const Profile = ({ className, ...rest }) => {
       }
       className={classes.root}
     >
+      
       <ListItem button onClick={handleClickCommon}>
-       
+      {/* <ListItemIcon>
+                    <IconButton aria-label="add" onClick={handleAddCommon}>
+                      <AddIcon fontSize="small" />
+                    </IconButton>
+                  </ListItemIcon> */}
         <ListItemText primary="Common" />
         {open_common ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open_common} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button className={classes.nested} onClick={() => {props.handleValue(0);}}>
             
-            <ListItemText primary="Starred" />
+            <ListItemText primary={props.configA} />
+            <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="delete">
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
           </ListItem>
         </List>
       </Collapse>
@@ -98,9 +120,14 @@ const Profile = ({ className, ...rest }) => {
       </ListItem>
       <Collapse in={open_projects} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button className={classes.nested} onClick={() => props.handleValue(1)}>
             
-            <ListItemText primary="Starred" />
+            <ListItemText primary={props.configB} />
+            <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="delete">
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
           </ListItem>
         </List>
       </Collapse>
@@ -113,18 +140,22 @@ const Profile = ({ className, ...rest }) => {
       
       <Collapse in={open_personal} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button className={classes.nested} onClick={() => props.handleValue(2)}>
             
-            <ListItemText primary="Starred" />
+            <ListItemText primary={props.configC} />
+            <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="delete">
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
           </ListItem>
         </List>
       </Collapse>
     </List>
-  );
+  )
 };
 
 Profile.propTypes = {
   className: PropTypes.string
 };
 
-export default Profile;
