@@ -33,12 +33,12 @@ class AceFeatureEditor extends React.Component {
         this.state = {
             mode: this.props.mode?this.props.mode:DEFAULT_MODE,
             readOnly: false,
-            editorContent: "",
+            editorContent: props.value,
         }
         this.message = "";
         this.front = 10;
 
-        this.props.onLoad(this);
+        if(this.props.onLoad)this.props.onLoad(this);
     }
 
     loadCompleters=(editor)=>{
