@@ -32,6 +32,16 @@ const user = {
 
 const items = [
   {
+    href: '/app/config',
+    icon: SettingsIcon,
+    title: 'Config'
+  },
+  {
+    href: '/app/admin',
+    icon: UsersIcon,
+    title: 'Admin'
+  },
+  {
     href: '/app/dashboard',
     icon: BarChartIcon,
     title: 'Dashboard'
