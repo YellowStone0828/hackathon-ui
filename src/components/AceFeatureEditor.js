@@ -5,37 +5,36 @@ import 'ace-builds/src-noconflict/mode-gherkin'
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
 
-
-
-
 // 增加需要自定义的代码提示
-const completers = [
+const defaultCompleters = [
     {
         name: 'Then',
         value: 'Then',
         // score: 100,
-        meta: 'keyword'
-    },    {name:'Feature',value:'Feature'},
+        // meta: 'keyword'
+    },{name:'Feature',value:'Feature'},
     {name:'Scenario',value:'Scenario'},
     {name:'When',value:'When'},
     {name:'Given',value:'Given'},
     {name:'And',value:'And'},
-    {name:'Click', value:"Then (\\w+) click on (\\w+)"}
+    // {name:'Click', value:"Then (\\w+) click on (\\w+)"}
 ];
 
 const complete = editor => {
     if(!editor.completers){
-        editor.completers=new Array();
+        editor.completers=[];
     }
     editor.completers.push({
         getCompletions: function (editors, session, pos, prefix, callback) {
-            callback(null, completers);
+            callback(null, defaultCompleters);
         }
     });
 }
 
 
 class AceFeatureEditor extends React.Component {
+    // completers                                       to set hints
+    //void onLoad(AceFeatureEditor editor)              onLoadEvent
 
     constructor(props) {
         super(props);
@@ -46,7 +45,32 @@ class AceFeatureEditor extends React.Component {
         }
         this.message = "Feature: feature";
         this.front = 10;
+
+        this.props.onLoad(this);
     }
+
+    loadCompleters=(editor)=>{
+        const completers = this.props.completers && this.props.completers.length>0?this.props.completers:defaultCompleters;
+        if(!editor.completers){
+            editor.completers=[];
+        }
+        editor.completers.push({
+            getCompletions: function (editors, session, pos, prefix, callback) {
+                callback(null, completers);
+            }
+        });
+    }
+
+    getContent=()=>{
+        return this.state.editorContent;
+    }
+    
+    addLine=(line)=>{
+        this.setState({
+            editorContent: this.state.editorContent+"\r\n"+line
+        });
+    }    
+
     render() {
 
         return (<AceEditor
@@ -80,7 +104,7 @@ class AceFeatureEditor extends React.Component {
                 showLineNumbers: true,
                 tabSize: 4
             }}
-            onLoad={complete}
+            onLoad={this.loadCompleters}
         />);
     }
 }
