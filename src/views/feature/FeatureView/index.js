@@ -41,11 +41,16 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from '@material-ui/core/Avatar';
 import Notifications from './Notifications';
 import SaveNotification from './SaveNotification';
+import { minHeight } from '@material-ui/system';
+import Save from '@material-ui/icons/Save';
+import ArrowRight from '@material-ui/icons/ArrowRight';
+
 
 const styles = (theme) => ({
   root: {
     margin: 0,
     padding: theme.spacing(2),
+    display: 'flex'
   },
   closeButton: {
     position: 'absolute',
@@ -89,10 +94,14 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100%',
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(3),
-    backgroundColor: '#dadada'
+    backgroundColor: '#dadada',
+    display:'flex'
   },
   dashboardContainer: {
-    minWidth: '100%'
+    minWidth: '100%',
+    minHeight:'100%',
+    margin:'auto 0',
+    verticalAlign:'middle'
   },
   tabroot: {
     flexGrow: 1,
@@ -201,8 +210,7 @@ const Feature = () => {
       <Container className={classes.dashboardContainer}>
         <Grid
           container
-          spacing={3}
-          xs={12}
+          spacing={3}          
         >
           <Grid
             item
@@ -219,9 +227,9 @@ const Feature = () => {
             </Grid> */}
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
-            <div style={{ display: 'block', position: 'relative' }}><div style={{ position: "absolute", top: "5px", right: "0px" }}>
-              <Button style={{ color: saveBtnColor }} onClick={handleSaveClick} className={classes.btn}>Save</Button>
-              <Button onClick={handleRunClick} className={classes.btn}>Run</Button></div></div>
+            <div style={{ display: 'block', position: 'relative' }}><div style={{ position: "absolute", top: "0px", right: "0px" }}>
+              <IconButton style={{ color: saveBtnColor }} onClick={handleSaveClick} className={classes.btn} style={{height:'30px',width:'30px'}} color="primary"><Save/></IconButton>
+              <IconButton onClick={handleRunClick} className={classes.btn} ><ArrowRight fontSize="large" style={{height:'30px',width:'30px',color:'#04d004e0'}}/></IconButton></div></div>
             <div className={classes.tabroot} description={anyValue}>
               <div className={classes.tabdemo1}>
                 <AntTabs value={tabValue} onChange={handleChange} aria-label="ant example">

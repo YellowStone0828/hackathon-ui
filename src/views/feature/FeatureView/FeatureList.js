@@ -135,7 +135,7 @@ const FeatureList = ({ className, ...rest }) => {
                 <TableCell>
                   Feature
                 </TableCell>
-                <TableCell>
+                <TableCell style={{width:'20px'}}>
                   Action
                 </TableCell>
               </TableRow>
@@ -151,9 +151,10 @@ const FeatureList = ({ className, ...rest }) => {
                   >
                     {order.name}
                   </TableCell>
-                  <TableCell>
+                  <TableCell >
                     <Chip
-                      color="danger"
+
+                      style={{backgroundColor:'#ef5e75'}}
                       label="X"
                       size="small"
                       onClick={()=>{handleDeleteClick(order)}}

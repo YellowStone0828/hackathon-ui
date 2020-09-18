@@ -35,6 +35,7 @@ class AceFeatureEditor extends React.Component {
             mode: this.props.mode?this.props.mode:DEFAULT_MODE,
             readOnly: false,
             editorContent: props.value,
+            deskHeight:750
         }
         this.message = "";
         this.front = 15;
@@ -95,7 +96,7 @@ class AceFeatureEditor extends React.Component {
             highlightActiveLine  //突出活动线
             enableSnippets  //启用代码段
             value={this.state.editorContent}
-            style={{ width: '100%', height: this.state.deskHeight, minHeight: 600 }}
+            style={{ width: '100%', height: this.state.deskHeight, minHeight: 710 }}
             commands={[{    //命令是键绑定数组。
                 name: 'saveFile', //键绑定的名称。
                 bindKey: { win: 'Ctrl-S', mac: 'Command-S' }, //用于命令的组合键。
