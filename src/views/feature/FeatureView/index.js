@@ -228,8 +228,12 @@ const Feature = () => {
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
             <div style={{ display: 'block', position: 'relative' }}><div style={{ position: "absolute", top: "0px", right: "0px" }}>
-              <IconButton style={{ color: saveBtnColor }} onClick={handleSaveClick} className={classes.btn} style={{height:'30px',width:'30px'}} color="primary"><Save/></IconButton>
-              <IconButton onClick={handleRunClick} className={classes.btn} ><ArrowRight fontSize="large" style={{height:'30px',width:'30px',color:'#04d004e0'}}/></IconButton></div></div>
+              <IconButton style={{ color: saveBtnColor }} onClick={handleSaveClick} className={classes.btn} color="primary">
+                <Save style={{height:'30px',width:'30px'}}  color="primary" fontSize="small"/>
+                </IconButton>
+              <IconButton onClick={handleRunClick} className={classes.btn} 
+              ><ArrowRight fontSize="large" style={{height:'30px',width:'30px',color:'#04d004e0'}}/>
+              </IconButton></div></div>
             <div className={classes.tabroot} description={anyValue}>
               <div className={classes.tabdemo1}>
                 <AntTabs value={tabValue} onChange={handleChange} aria-label="ant example">
