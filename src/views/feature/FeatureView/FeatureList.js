@@ -13,6 +13,9 @@ import {
   makeStyles,
   colors, Table, TableHead, TableRow, TableCell, Tooltip, TableSortLabel, TableBody, Chip
 } from '@material-ui/core';
+import {
+  List
+} from '@material-ui/icons'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -124,7 +127,7 @@ const FeatureList = ({ className, ...rest }) => {
             Common
           </Button>
         )}
-        title="Feature"
+        title={(<div style={{fontSize:"large",display:"flex"}}><List/><span>Features</span></div>)}
       />
       <Divider />
       <PerfectScrollbar>
@@ -133,7 +136,7 @@ const FeatureList = ({ className, ...rest }) => {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  Feature
+                  Name
                 </TableCell>
                 <TableCell style={{width:'20px'}}>
                   Action

@@ -15,6 +15,9 @@ import {
   ListItemText,
   makeStyles
 } from '@material-ui/core';
+import {
+  List as ListIcon
+} from '@material-ui/icons'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import Dialog from '@material-ui/core/Dialog';
@@ -131,7 +134,7 @@ const FeatureTemplate = ({ className, ...rest }) => {
     >
       <CardHeader
         subtitle={`${products.length} in total`}
-        title="Template"
+        title={(<div style={{fontSize:"large",display:"flex"}}><ListIcon/><span>Templates</span></div>)}
       />
       <Divider />
       <List>
