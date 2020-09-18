@@ -92,7 +92,7 @@ const FeatureList = ({ className, ...rest }) => {
   const classes = useStyles();
   const [orders,setOrders] = useState(data);
   useEffect(()=>{
-      sendGetRequest("http://192.168.8.116:8202/feature/findFeatureGroup?group=public",null,(data)=>{setOrders(data)});
+      sendGetRequest("http://127.0.0.1:8202/feature/findFeatureGroup?group=public",null,(data)=>{setOrders(data)});
   },[])
   const handleDeleteClick=(order)=>{
     let newOrders = [];
@@ -104,7 +104,7 @@ const FeatureList = ({ className, ...rest }) => {
     }
     
     setOrders(newOrders);
-    sendGetRequest("http://192.168.8.116:8202/feature/delete?id="+order.id,null,()=>{});
+    sendGetRequest("http://127.0.0.1:8202/feature/delete?id="+order.id,null,()=>{});
   }
   const handleNameClick=(order)=>{
     rest.onNameClick(order);

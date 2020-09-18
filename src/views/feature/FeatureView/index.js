@@ -177,7 +177,7 @@ const Feature = () => {
     const saveFailed = (data) => {
       setSaveBtnColor("red");
     }
-    sendPostRequest("http://192.168.8.116:8202/feature/add", { content: lstEditor[tabValue].getContent(),name:tabName, group:"public" }, saveSuccessfully, saveFailed, saveFailed);
+    sendPostRequest("http://127.0.0.1:8202/feature/add", { content: lstEditor[tabValue].getContent(),name:tabName, group:"public" }, saveSuccessfully, saveFailed, saveFailed);
     setOpen(false);
     setSaveNotificationOpen(false);
   }
@@ -197,7 +197,7 @@ const Feature = () => {
     setRunNotificationOpen(true);
   }
   const handleDialogRunClick=()=>{
-    sendPostRequest("http://192.168.8.116:8202/cucumber/start", { content: lstEditor[tabValue].getContent(),name:tabName,group:"public"}, presentReport, presentReport, presentReport);
+    sendPostRequest("http://127.0.0.1:8202/cucumber/start", { content: lstEditor[tabValue].getContent(),name:tabName,group:"public"}, presentReport, presentReport, presentReport);
     setOpen(false);
     setRunNotificationOpen(false);
   }

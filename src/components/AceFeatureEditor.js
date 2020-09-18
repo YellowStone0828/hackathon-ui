@@ -44,7 +44,7 @@ class AceFeatureEditor extends React.Component {
     }
 
     loadCompleters=(editor)=>{
-        sendGetRequest("http://192.168.8.116:8202/feature/findHint",null,(data)=>{
+        sendGetRequest("http://127.0.0.1:8202/feature/findHint",null,(data)=>{
             let completers = data.result;
             if(this.props.completers && this.props.completers.length>0){
                 completers.push(this.props.completers);
