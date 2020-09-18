@@ -37,7 +37,7 @@ const ConfigView = () => {
   const [configA_name, setConfigA_name] = React.useState('common.yml');
   const [configA_file, setConfigA_file] = React.useState('Common Config:\nNewOrder:\n8: FIX44\n35: D\n50\n49:\n34:\n52:\n40:\n54:\n55:\n11:\n21:\n60:\n59:\n75:\n22:\n528:\n1:');
   const [configB_name, setConfigB_name] = React.useState('project_A.yml');
-  const [configB_file, setConfigB_file] = React.useState('Project Config:\nNewOrder:\n8: FIX44\n35: D\n50\n49:\n34:\n52:\n40:\n54:\n55:\n11:\n21:\n60:\n59:\n75:\n22:\n528:\n1:');
+  const [configB_file, setConfigB_file] = React.useState('Repository:\n    LoginPage:\n        trait://*[@id="logon-signin"]\n        usernameTextbox: //*[@id="logon-form"]/input[1]\n        passwordTextbox: //*[@id="logon-form"]/input[2]');
   const [configC_name, setConfigC_name] = React.useState('personal_Jack.yml');
   const [configC_file, setConfigC_file] = React.useState('Personal Config:\nNewOrder:\n8: FIX44\n35: D\n50\n49:\n34:\n52:\n40:\n54:\n55:\n11:\n21:\n60:\n59:\n75:\n22:\n528:\n1:');
 

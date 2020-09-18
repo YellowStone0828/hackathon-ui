@@ -44,6 +44,7 @@ import SaveNotification from './SaveNotification';
 import { minHeight } from '@material-ui/system';
 import Save from '@material-ui/icons/Save';
 import ArrowRight from '@material-ui/icons/ArrowRight';
+import PlayArrow from '@material-ui/icons/PlayArrow';
 
 
 const styles = (theme) => ({
@@ -163,7 +164,7 @@ const Feature = () => {
   }
 
   const handleTemplateItemSelected = (product) => {
-    lstEditor[tabValue].addLine(product.description);
+    lstEditor[tabValue].addLine(product.value);
   }
   const handleSaveClick = ()=>{
     setOpen(true);
@@ -218,13 +219,7 @@ const Feature = () => {
             md={3}
             xs={12}
           >
-            <FeatureList  onNameClick={(order)=>{lstEditor[tabValue].setContent(order.content); setTabName(order.name+".feature");}}/>
-            {/* <Grid container spacing={1}>
-              <Grid item lg={12} xs={12}><FeatureList /></Grid>
-            </Grid>
-            <Grid container spacing={1}>
-              <Grid item lg={12} xs={12}><FeatureTemplate onTemplateItemSelected={handleTemplateItemSelected}/></Grid> 
-            </Grid> */}
+            <FeatureList  onNameClick={(order)=>{lstEditor[tabValue].setContent(order.content); setTabName(order.name);}}/>            
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
             <div style={{ display: 'block', position: 'relative' }}><div style={{ position: "absolute", top: "0px", right: "0px" }}>
@@ -232,7 +227,7 @@ const Feature = () => {
                 <Save style={{height:'30px',width:'30px'}}  color="primary" fontSize="small"/>
                 </IconButton>
               <IconButton onClick={handleRunClick} className={classes.btn} 
-              ><ArrowRight fontSize="large" style={{height:'30px',width:'30px',color:'#04d004e0'}}/>
+              ><PlayArrow fontSize="medium" style={{height:'30px',width:'30px',color:'#04d004e0'}}/>
               </IconButton></div></div>
             <div className={classes.tabroot} description={anyValue}>
               <div className={classes.tabdemo1}>
