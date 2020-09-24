@@ -71,9 +71,9 @@ const DialogActions = withStyles((theme) => ({
 const data = [
   {
     id: uuid(),
-    name: 'Web',
+    name: 'Business',
     imageUrl: '/static/images/products/product_1.png',
-    updatedAt: 'Web related action'
+    updatedAt: 'Business related action'
   },
   {
     id: uuid(),
@@ -83,9 +83,9 @@ const data = [
   },
   {
     id: uuid(),
-    name: 'Business',
+    name: 'Web',
     imageUrl: '/static/images/products/product_3.png',
-    updatedAt: 'Business related action'
+    updatedAt: 'Web related action'
   },
   {
     id: uuid(),
